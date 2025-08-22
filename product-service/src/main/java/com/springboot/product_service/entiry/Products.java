@@ -1,5 +1,6 @@
 package com.springboot.product_service.entiry;
 
+import com.springboot.product_service.configuration.IdGenerator;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,7 +14,6 @@ import java.time.LocalDateTime;
 public class Products {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String productId;
     private String name;
     private String description;
@@ -34,6 +34,11 @@ public class Products {
         this.inStock = this.quantity != null && this.quantity >0;
         if(createdAt == null) createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
+
+        // Id generator
+        if(this.productId == null){
+            this.productId = "prod-"+String.format("%05", IdGenerator.generateProductId());
+        }
     }
 
 }

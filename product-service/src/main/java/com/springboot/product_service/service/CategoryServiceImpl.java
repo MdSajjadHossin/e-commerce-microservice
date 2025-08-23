@@ -2,12 +2,16 @@ package com.springboot.product_service.service;
 
 import com.springboot.product_service.dto.CategoryRequestDto;
 import com.springboot.product_service.dto.CategoryResponseDto;
+import com.springboot.product_service.dto.ExtendedCategoryResponseDto;
 import com.springboot.product_service.entiry.Category;
+import com.springboot.product_service.entiry.Products;
 import com.springboot.product_service.mapper.CategoryMapping;
+import com.springboot.product_service.mapper.ProductMapping;
 import com.springboot.product_service.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,11 +44,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryResponseDto> getAllCategories() {
-        return categoryRepository.findAll().stream()
-                .map(CategoryMapping::toCategoryResponseDto)
-                .toList();
+    public List<ExtendedCategoryResponseDto> getAllCategories() {
+        List<Category> categories = categoryRepository.findAll();
+        List<ExtendedCategoryResponseDto> categoryResponseDto = new ArrayList<>();
+        for (Category category : categories) {
+            ExtendedCategoryResponseDto dto = convertToExtendedDto(category);
+            categoryResponseDto.add(dto);
+        }
+        return categoryResponseDto;
     }
+    
 
     @Override
     public void deleteCategory(String categoryId) {
@@ -53,5 +62,16 @@ public class CategoryServiceImpl implements CategoryService {
         }else {
             throw new RuntimeException("Category not found with id: " + categoryId);
         }
+    }
+
+    private ExtendedCategoryResponseDto convertToExtendedDto(Category category) {
+        List<Products> productsList = category.getProducts();
+        return new ExtendedCategoryResponseDto(
+                category.getCategoryId(),
+                category.getName(),
+                category.getDescription(),
+                productsList.stream().map(ProductMapping::toProductResponseDto).toList()
+
+        );
     }
 }

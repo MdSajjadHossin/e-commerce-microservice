@@ -9,7 +9,7 @@ import java.util.List;
 public interface CategoryService {
 
     CategoryResponseDto createCategory(CategoryRequestDto categoryRequestDto);
-    CategoryResponseDto getCategoryById(String categoryId);
+    ExtendedCategoryResponseDto getCategoryById(String categoryId);
     CategoryResponseDto updateCategory(String categoryId, CategoryRequestDto categoryRequestDto);
     List<ExtendedCategoryResponseDto> getAllCategories();
     void deleteCategory(String categoryId);

@@ -30,12 +30,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponseDto getCategoryById(String categoryId) {
-            Category findCategory = categoryRepository.findById(categoryId).orElse(null);
-            if(findCategory != null){
-                return CategoryMapping.toCategoryResponseDto(findCategory);
-            }
-        return null;
+    public ExtendedCategoryResponseDto getCategoryById(String categoryId) {
+            Category findCategory = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+            return convertToExtendedDto(findCategory);
+
     }
 
     @Override
@@ -53,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return categoryResponseDto;
     }
-    
+
 
     @Override
     public void deleteCategory(String categoryId) {

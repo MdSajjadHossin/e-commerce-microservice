@@ -24,7 +24,7 @@ public class Category {
     @PrePersist
     public void generateId(){
         if(this.categoryId == null){
-            this.categoryId = "cat-"+String.format("%05", IdGenerator.generateCategoryId());
+            this.categoryId = "cat-"+String.format("%05d", IdGenerator.generateCategoryId());
         }
     }
 }

@@ -29,6 +29,10 @@ public class ProductController {
     public List<ProductResponseDto> getAllProducts(){
         return productService.getAllProducts();
     }
+    @PutMapping("/updateProduct/{productId}")
+    public ProductResponseDto updateProduct(@PathVariable String productId, @RequestBody ProductRequestDto productRequestDto){
+        return productService.updateProduct(productId, productRequestDto);
+    }
 
     @DeleteMapping("/delete/{productId}")
     public void deleteProduct(@PathVariable String productId) {

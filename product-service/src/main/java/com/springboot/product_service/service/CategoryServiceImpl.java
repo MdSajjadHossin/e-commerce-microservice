@@ -38,7 +38,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponseDto updateCategory(String categoryId, CategoryRequestDto categoryRequestDto) {
-        return null;
+        Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+        category.setName(categoryRequestDto.getName());
+        category.setDescription(categoryRequestDto.getDescription());
+        Category updatedCategory = categoryRepository.save(category);
+        return CategoryMapping.toCategoryResponseDto(updatedCategory);
     }
 
     @Override

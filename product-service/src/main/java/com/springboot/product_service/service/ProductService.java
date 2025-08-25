@@ -10,7 +10,7 @@ public interface ProductService {
 
     ProductResponseDto createProduct(ProductRequestDto productRequestDto);
     ProductResponseDto getProductById(String productId);
-    ProductResponseDto updateProduct(ProductRequestDto productRequestDto);
+    ProductResponseDto updateProduct(String productId, ProductRequestDto productRequestDto);
     void deleteProducts(String productId);
     List<ProductResponseDto> getAllProducts();
     ProductResponseDto updateStock(String productId, Integer stockQuantity);

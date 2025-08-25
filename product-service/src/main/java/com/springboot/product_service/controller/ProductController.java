@@ -21,7 +21,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ProductResponseDto getProductById(String productId){
+    public ProductResponseDto getProductById(@PathVariable String productId){
         return productService.getProductById(productId);
     }
 
@@ -29,5 +29,16 @@ public class ProductController {
     public List<ProductResponseDto> getAllProducts(){
         return productService.getAllProducts();
     }
+
+    @DeleteMapping("/delete/{productId}")
+    public void deleteProduct(@PathVariable String productId) {
+        productService.deleteProducts(productId);
+    }
+
+    @PutMapping("/{productId}/updateStock")
+    public ProductResponseDto updateStock(@PathVariable String productId, @RequestParam Integer stockQuantity){
+        return productService.updateStock(productId, stockQuantity);
+    }
+
 
 }
